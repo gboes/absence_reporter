@@ -1,14 +1,21 @@
 """
 Simple utility to draft emails to tutors of absent students.
-Currently set to not send, but only draft these.
+Emails are not sent automatically but only opened as drafts:
+any email has to be sent out with manual confirmation.
+Assumes Outlook is running in the background.
+
+To adapt the email template, edit the html string in the function
+"create_email_body" below.
+
+Gregor Boes, 2019, gregor.boes@kcl.ac.uk
+Feel free to use and adapt as you like;
+no warranty for this code being fit for purpose.
 """
 # import pyOutlook as out
 import datetime
 import win32com.client
 import sys
 import pandas as pd
-
-
 
 try:
     outlook = win32com.client.Dispatch('Outlook.Application')
@@ -20,7 +27,13 @@ student_names = []
 t_add = pd.read_csv("./tutor_addresslist.csv")
 
 while True:
-    newinput = input("Add student to reports - or type 'DONE' to continue to tutors, 'DELETE' to remove last addition, or a local path to a .csv or .txt file with student names and tutor names. \n")
+    newinput = input("RETURN to load absences from './absences.csv'. Type student name to add student to reports - or type 'DONE' to continue to tutors, 'DELETE' to remove last addition, or a local path to a .csv or .txt file with student names. \n")
+    if newinput[-4::] == "":
+        newinput = "absences.csv"
+        df = pd.read_csv(newinput)
+        student_names = df.Name.values.tolist()
+        print("Reporting absence for:\n", *student_names, sep="\n")
+        break
     if newinput[-4::] == ".txt":
         df = pd.read_table(newinput)
         student_names = df.Name.tolist()
@@ -75,11 +88,11 @@ def create_email_body(student_name, tutor_name, seminar_name, seminar_time):
     body = \
     f"""<html><body>Dear {tutor_name.split()[0]}, <br><br>
 
-    I am reporting the absence of <b>{student_name}</b> in two consecutive seminars. I just want to check they are alright.
+    <b>{student_name}</b> has been absent in the last two seminars. I just want to check they are alright.
     <br>
 
     <br>
-    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}.</par>
+    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}. If they need help catching up, my office hours are Tuesdays, 9:30-10:30. </par>
     <br><br>
 
     Best,<br>
