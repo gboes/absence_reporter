@@ -92,7 +92,7 @@ def create_email_body(student_name, tutor_name, seminar_name, seminar_time):
     <br>
 
     <br>
-    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}. If they need help catching up, my office hours are Tuesdays, 9:30-10:30. </par>
+    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}. If they need help catching up, my office hours are Fridays, 15:00-1600 after appointment, either in person or online. </par>
     <br><br>
 
     Best,<br>
@@ -110,7 +110,7 @@ for i in range(len(student_names)):
     mail.HTMLBody = create_email_body(student_names[i], tutor_names[i], seminar_name,
                                   seminar_time)
     mail.To = tutor_addresses[i]
-    mail.Subject = f"{student_names[i]}: Two Consecutive Absences in '{seminar_name}''"
+    mail.Subject = f"{student_names[i]}: Consecutive Absences in '{seminar_name}'"
     mail.Display(True)
 
 
