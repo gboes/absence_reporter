@@ -88,11 +88,11 @@ def create_email_body(student_name, tutor_name, seminar_name, seminar_time):
     body = \
     f"""<html><body>Dear {tutor_name.split()[0]}, <br><br>
 
-    <b>{student_name}</b> has been absent in the last two seminars. I just want to check they are alright.
+    <b>{student_name}</b> has been absent in the last two seminars. I just want to check they are alright, and I found you listed as their personal or liaison tutor.
     <br>
 
     <br>
-    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}. If they need help catching up, my office hours are Fridays, 15:00-1600 after appointment, either in person or online. </par>
+    This concerns the seminar <b>'{seminar_name}'</b>, {seminar_time}. If they need help catching up, my office hours are Thursdays, 10:00-11:00 in PB302 or online. </par>
     <br><br>
 
     Best,<br>
@@ -126,3 +126,7 @@ on {date}:
 {student_namestring}
 """
 print(report)
+with open("./absence_report_log.txt", "a+") as f:
+    f.write("==============================")
+    f.write(report)
+    f.write("==============================")
