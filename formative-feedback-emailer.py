@@ -2,7 +2,7 @@
 
 
 """
-Simple utility to draft a serious of emails based on anonymized file names.
+Simple utility to draft a batch of emails based on anonymized file names.
 Emails are not sent automatically but only opened as drafts:
 any email has to be sent out with manual confirmation.
 Assumes Outlook is running in the background.
